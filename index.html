@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>RoadSoS Emergency System</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1> &#128657; RoadSoS Emergency System</h1>
+
+<p>Enter emergency contact number</p>
+
+<input type="text" id="contact" placeholder="Enter number with country code">
+
+<br><br>
+
+<button class="sos" onclick="sendSOS()"> SOS</button>
+
+<br>
+
+<a href="tel:108">
+<button class="call">Call Ambulance (108)</button>
+</a>
+
+<br><br>
+
+<div id="location"></div>
+
+<br>
+
+
+<video id="cameraVideo" autoplay playsinline></video>
+
+<br>
+
+<button class="cameraBtn" onclick="capturePhoto()">📷 Capture Photo</button>
+
+<canvas id="canvas" style="display:none"></canvas>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
