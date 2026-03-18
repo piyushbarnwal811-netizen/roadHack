@@ -15,7 +15,7 @@
 
 <div class="container">
 
-<h1> &#128657; RoadSoS Emergency System</h1>
+<h1> 🚨 RoadSoS Emergency System</h1>
 
 <p>Enter emergency contact number</p>
 
@@ -23,27 +23,37 @@
 
 <br><br>
 
-<button class="sos" onclick="sendSOS()"> SOS</button>
+<!-- SOS Button -->
+<button class="sos" onclick="sendSOS()">🚨 SOS</button>
 
 <br>
 
+<!-- Call Buttons -->
 <a href="tel:108">
-<button class="call">Call Ambulance (108)</button>
+<button class="call">🚑 Call Ambulance (108)</button>
 </a>
+
+<br>
+
+<button class="call" onclick="callPolice()">🚓 Call Police (100)</button>
 
 <br><br>
 
+<!-- Location -->
 <div id="location"></div>
 
 <br>
 
-
+<!-- Camera -->
 <video id="cameraVideo" autoplay playsinline></video>
 
 <br>
 
 <button class="cameraBtn" onclick="capturePhoto()">📷 Capture Photo</button>
 
+<button class="switchBtn" onclick="switchCamera()">🔄 Switch Camera</button>
+
+<!-- Canvas -->
 <canvas id="canvas" style="display:none"></canvas>
 
 </div>

@@ -1,82 +1,104 @@
 body{
-
-font-family: Arial;
-background:#f4f4f4;
-text-align:center;
-margin:0;
-padding:0;
-
+    font-family: Arial;
+    background: linear-gradient(135deg,#ff9acb,#ff5fa2);
+    text-align:center;
+    margin:0;
+    padding:0;
 }
 
 .container{
-
-background:white;
-max-width:400px;
-margin:40px auto;
-padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-
+    background:white;
+    max-width:400px;
+    margin:40px auto;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
 }
 
 h1{
-
-color:#333;
-
+    color:#333;
 }
 
 input{
-
-padding:10px;
-width:80%;
-font-size:16px;
-
+    padding:12px;
+    width:85%;
+    font-size:16px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
 }
 
+/* All buttons */
 button{
-
-padding:12px 20px;
-font-size:16px;
-margin:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-
+    padding:12px 20px;
+    font-size:16px;
+    margin:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
+/* Hover effect */
+button:hover{
+    transform:scale(1.05);
+}
+
+/* SOS button */
 .sos{
-
-background:red;
-color:white;
-
+    background:red;
+    color:white;
 }
 
+/* Call buttons */
 .call{
-
-background:green;
-color:white;
-
+    background:green;
+    color:white;
 }
 
+/* Camera button */
 .cameraBtn{
-
-background:#007bff;
-color:white;
-
+    background:#007bff;
+    color:white;
 }
 
+/* Switch camera button */
+.switchBtn{
+    background:black;
+    color:white;
+}
+
+/* Video styling */
 video{
-
-width:100%;
-max-width:300px;
-border-radius:10px;
-margin-top:10px;
-
+    width:100%;
+    max-width:320px;
+    border-radius:12px;
+    margin-top:10px;
 }
 
+/* Canvas */
+canvas{
+    width:100%;
+    max-width:320px;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* Location text */
 #location{
+    margin-top:10px;
+    font-weight:bold;
+    color:#333;
+}
 
-margin-top:10px;
-font-weight:bold;
+/* Mobile responsive */
+@media(max-width:500px){
+    .container{
+        margin:20px;
+        padding:15px;
+    }
 
+    button{
+        width:90%;
+    }
 }
