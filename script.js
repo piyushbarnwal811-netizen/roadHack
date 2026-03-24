@@ -2,6 +2,12 @@ let accidentDetected = false;
 let currentFacingMode = "environment";
 let currentStream;
 
+// API base: local dev -> localhost, deployed -> replace with your backend URL
+const API_BASE =
+    (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+        ? "http://localhost:3000"
+        : "https://YOUR-BACKEND-URL";
+
 async function startCamera(){
     try{
         if(currentStream){
@@ -66,7 +72,7 @@ async function sendSOS(){
                 formData.append("lat", lat);
                 formData.append("lon", lon);
 
-                let res = await fetch("http://localhost:3000/send-sos",{
+                let res = await fetch(`${API_BASE}/send-sos`,{
                     method:"POST",
                     body: formData
                 });
