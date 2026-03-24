@@ -2,7 +2,7 @@ let accidentDetected = false;
 let currentFacingMode = "environment";
 let currentStream;
 
-// API base: local dev -> localhost, deployed -> replace with your backend URL
+
 const API_BASE =
     (location.hostname === "localhost" || location.hostname === "127.0.0.1")
         ? "http://localhost:3000"
