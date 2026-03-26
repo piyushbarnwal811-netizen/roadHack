@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RoadSOS Emergency</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
   <header class="hero">
     <div class="hero-inner">
       <div class="badge">RoadSOS</div>
       <h1>Emergency Assist for Road Safety</h1>
-      <p class="subtitle">Quick SOS, live location, camera snapshot, and one-tap emergency calls.</p>
+      <p class="subtitle">
+        Quick SOS, live location, camera snapshot, and one-tap emergency calls.
+      </p>
+
       <div class="hero-actions">
         <button class="primary" id="btnSendSOS">Send SOS</button>
         <button class="ghost" id="btnTest">Run Demo</button>
@@ -20,14 +24,24 @@
   </header>
 
   <main class="grid">
+
     <section class="card">
       <h2>Trusted Contacts</h2>
-      <p class="muted">Add multiple numbers. We will open WhatsApp messages for each contact.</p>
+      <p class="muted">
+        Add multiple numbers. WhatsApp and SMS message window will open for each contact.
+      </p>
+
       <div class="row">
-        <input type="text" id="contactInput" placeholder="Country code + number, e.g. 91XXXXXXXXXX">
+        <input
+          type="text"
+          id="contactInput"
+          placeholder="Country code + number, e.g. 919876543210"
+        >
         <button class="secondary" id="btnAddContact">Add</button>
       </div>
+
       <div id="contactList" class="chip-list"></div>
+
       <div class="row">
         <button class="secondary" id="btnClearContacts">Clear All</button>
         <button class="secondary" id="btnSaveContacts">Save</button>
@@ -36,19 +50,25 @@
 
     <section class="card">
       <h2>Location & Safety</h2>
-      <p class="muted">Allow location to share a maps link with your contacts.</p>
+      <p class="muted">
+        Allow location to share a maps link with your contacts.
+      </p>
+
       <div class="status">
         <div id="locationStatus">Location: Not requested</div>
         <div id="permissionStatus">Permissions: Unknown</div>
       </div>
+
       <div class="row">
         <button class="secondary" id="btnGetLocation">Get Location</button>
         <button class="ghost" id="btnCopyLink">Copy Maps Link</button>
       </div>
+
       <div class="toggle">
         <input type="checkbox" id="toggleHospitals" checked>
         <label for="toggleHospitals">Open nearby hospitals after SOS</label>
       </div>
+
       <div class="toggle">
         <input type="checkbox" id="toggleAutoDetect" checked>
         <label for="toggleAutoDetect">Auto-detect crash (mobile only)</label>
@@ -57,35 +77,45 @@
 
     <section class="card">
       <h2>Camera Snapshot</h2>
-      <p class="muted">Capture a quick photo to share later or keep as evidence.</p>
+      <p class="muted">
+        Capture a quick photo to share later or keep as evidence.
+      </p>
+
       <video id="cameraVideo" autoplay playsinline></video>
       <canvas id="canvas"></canvas>
+
       <div class="row">
         <button class="secondary" id="btnCapture">Capture</button>
         <button class="secondary" id="btnSwitchCamera">Switch Camera</button>
         <button class="ghost" id="btnRestartCamera">Restart Camera</button>
       </div>
+
       <div class="row">
-        <a id="downloadPhoto" class="ghost" href="#" download="roadsos.jpg">Download Photo</a>
+        <a id="downloadPhoto" class="ghost link-btn" href="#" download="roadsos.jpg">
+          Download Photo
+        </a>
       </div>
     </section>
 
     <section class="card">
       <h2>Emergency Calls</h2>
       <p class="muted">One tap to place emergency calls.</p>
+
       <div class="row">
         <button class="danger" id="btnPolice">Police (100)</button>
         <button class="danger" id="btnAmbulance">Ambulance (108)</button>
       </div>
+
       <div class="note">
-        This app opens call and WhatsApp links. It does not automatically send messages without your confirmation.
+        This app opens call, WhatsApp, and SMS links. It does not automatically send messages without your confirmation.
       </div>
     </section>
 
-    <section class="card">
+    <section class="card full-width">
       <h2>Status Log</h2>
       <div id="log" class="log"></div>
     </section>
+
   </main>
 
   <footer class="footer">
