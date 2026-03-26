@@ -3,6 +3,7 @@ let currentFacingMode = "environment";
 let currentStream = null;
 let savedLocation = null;
 let contacts = JSON.parse(localStorage.getItem("roadsos_contacts")) || [];
+const BACKEND_BASE = "http://localhost:3000";
 
 const contactInput = document.getElementById("contactInput");
 const contactList = document.getElementById("contactList");
@@ -12,6 +13,7 @@ const downloadPhoto = document.getElementById("downloadPhoto");
 const logBox = document.getElementById("log");
 const locationStatus = document.getElementById("locationStatus");
 const permissionStatus = document.getElementById("permissionStatus");
+
 
 function addLog(message) {
   const time = new Date().toLocaleTimeString();
@@ -190,6 +192,23 @@ function buildSOSMessage() {
   return message;
 }
 
+function buildBackendMessage() {
+  return "HELP! I may be in danger or had an accident.";
+}
+
+function getCapturedPhotoBlob() {
+  return new Promise((resolve) => {
+    if (!canvas.width || !canvas.height) {
+      resolve(null);
+      return;
+    }
+
+    canvas.toBlob((blob) => {
+      resolve(blob || null);
+    }, "image/jpeg", 0.9);
+  });
+}
+
 function openWhatsAppForAll(message) {
   contacts.forEach((number, index) => {
     const waURL = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
@@ -214,48 +233,77 @@ function openSMSForAll(message) {
   addLog("SMS opened for all contacts");
 }
 
-function sendSOS() {
+async function sendSOS() {
   if (contacts.length === 0) {
     alert("Please add at least one trusted contact");
     return;
   }
 
-  const proceed = () => {
-    const message = buildSOSMessage();
+  const proceed = async () => {
+    const formData = new FormData();
+    formData.append("contacts", contacts.join(","));
 
-    openWhatsAppForAll(message);
-    openSMSForAll(message);
-
-    if (document.getElementById("toggleHospitals").checked && savedLocation) {
-      setTimeout(() => {
-        window.open(getNearbyHospitalLink(savedLocation.lat, savedLocation.lon), "_blank");
-      }, 2000);
+    if (savedLocation) {
+      formData.append("lat", String(savedLocation.lat));
+      formData.append("lon", String(savedLocation.lon));
     }
 
-    addLog("SOS triggered");
-    alert("SOS started: WhatsApp and SMS opened with help message");
+    formData.append("message", buildBackendMessage());
+
+    const photoBlob = await getCapturedPhotoBlob();
+    if (photoBlob) {
+      formData.append("photo", photoBlob, "roadsos.jpg");
+    }
+
+    addLog("Sending SOS to server...");
+
+    try {
+      const res = await fetch(`${BACKEND_BASE}/send-sos`, {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to send SOS");
+      }
+
+      addLog("SOS sent successfully");
+      alert("SOS sent successfully");
+
+      if (document.getElementById("toggleHospitals").checked && savedLocation) {
+        setTimeout(() => {
+          window.open(getNearbyHospitalLink(savedLocation.lat, savedLocation.lon), "_blank");
+        }, 2000);
+      }
+    } catch (error) {
+      console.error(error);
+      addLog(`SOS failed: ${error.message}`);
+      alert("SOS failed to send. Please try again.");
+    }
   };
 
   if (savedLocation) {
-    proceed();
+    await proceed();
   } else {
     if (!navigator.geolocation) {
-      proceed();
+      await proceed();
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         savedLocation = {
           lat: position.coords.latitude,
           lon: position.coords.longitude
         };
         locationStatus.textContent = `Location: ${savedLocation.lat.toFixed(5)}, ${savedLocation.lon.toFixed(5)}`;
         permissionStatus.textContent = "Permissions: Granted";
-        proceed();
+        await proceed();
       },
-      () => {
-        proceed();
+      async () => {
+        await proceed();
       }
     );
   }
